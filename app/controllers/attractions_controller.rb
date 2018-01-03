@@ -1,6 +1,8 @@
 class AttractionsController < ApplicationController
 
   def index
+
+
     if params[:search]
       @attractions = Attraction.search(params[:search]).order("created_at DESC")
     else

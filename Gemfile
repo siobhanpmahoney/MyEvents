@@ -32,6 +32,11 @@ gem 'jbuilder', '~> 2.5'
 gem 'json'
 gem 'pry'
 gem 'rest-client'
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

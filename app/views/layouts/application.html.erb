@@ -10,6 +10,33 @@
 
   <div class="nav bar", #nav>
     <%= link_to "Home", root_url %>
+
+    <% Attraction.all.any? do |att| %>
+      <% if current_page?(attraction_path(att)) %>
+        <%= link_to "All Attractions", attractions_path %>
+      <% end %>
+    <% end %>
+
+    <% Event.all.each do |att| %>
+      <% if current_page?(event_path(att)) %>
+        <%= link_to "All Events", events_path %>
+      <% end %>
+    <% end %>
+
+    <% Venue.all.each do |att| %>
+      <% if current_page?(venue_path(att)) %>
+        <%= link_to "All Venues", venues_path %>
+      <% end %>
+    <% end %>
+
+
+    <%= form_tag(search_path, id: "search-form") do %>
+    <%= text_field_tag :keyword, params[:keyword], placeholder: "Search" %>
+    <%= submit_tag "Search" %>
+    <% end %>
+
+
+
   </div>
 
 

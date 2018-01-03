@@ -167,3 +167,31 @@ end
 #   u2_inst.attractions << Attraction.find_or_create_by(name: attr["name"])
 #   end
 # end
+
+
+
+
+
+
+
+
+
+
+
+# <% Attraction.all.each do |att| %>
+#   <% if current_page?(attraction_path(att)) %>
+#     <%= link_to "All Attractions", attractions_path %>
+#   <% end %>
+# <% end %>
+#
+# <% Event.all.each do |att| %>
+#   <% if current_page?(event_path(att)) %>
+#     <%= link_to "All Events", events_path %>
+#   <% end %>
+# <% end %>
+#
+# <% Venue.all.each do |att| %>
+#   <% if current_page?(venue_path(att)) %>
+#     <%= link_to "All Venues", venues_path %>
+#   <% end %>
+# <% end %>
