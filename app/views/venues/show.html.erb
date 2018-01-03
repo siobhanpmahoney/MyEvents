@@ -1,0 +1,10 @@
+<h3><%= @venue.name %></h3>
+
+
+City: <%= @venue.city %> <br>
+
+Events: <br>
+<% @venue.events.each do |event| %>
+  <%= link_to event.name, event %> <br>
+  <%= event.start_date %> <br> <br>
+  <%end%>

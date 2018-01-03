@@ -4,7 +4,6 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :name
       t.datetime :sale_date
       t.datetime :start_date
-      t.belongs_to :attraction, foreign_key: true
       t.belongs_to :venue, foreign_key: true
 
       t.timestamps

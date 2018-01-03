@@ -1,0 +1,14 @@
+<div id=nav>
+  <%= link_to "All Attractions", attractions_path %>
+</div>
+
+
+<h2> <%= @attraction.name %> </h2> <br>
+
+<br>
+
+<% @attraction.events.each do |event| %>
+<%= link_to event.name, event %> <br>
+<%= link_to event.venue.name, event.venue %> <br>
+<%= event.venue.city %> <br> <br>
+<%end%>

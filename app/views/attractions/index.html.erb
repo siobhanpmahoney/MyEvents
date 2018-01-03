@@ -1,0 +1,13 @@
+<h2> Upcoming Attractions</h2>
+
+<% @attractions.each do |attraction| %>
+   <%= link_to attraction.name, attraction %> <br>
+
+  <br>
+  <br>
+   <!-- attraction.classification
+   attraction.price
+   attraction.genre
+   attraction.subgenre -->
+
+   <%end%>
