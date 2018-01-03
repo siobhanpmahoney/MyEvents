@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  sale_date: 2018-01-02 16:14:01
+  start_date: 2018-01-02 16:14:01
+  attraction: one
+  venue: one
+
+two:
+  name: MyString
+  sale_date: 2018-01-02 16:14:01
+  start_date: 2018-01-02 16:14:01
+  attraction: two
+  venue: two

@@ -1,0 +1,440 @@
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAttractions (20180102211140)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "attractions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180102211140"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateEvents (20180102211401)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sale_date" datetime, "start_date" datetime, "attraction_id" integer, "venue_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_e67dd56481"
+FOREIGN KEY ("attraction_id")
+  REFERENCES "attractions" ("id")
+, CONSTRAINT "fk_rails_f476266cf4"
+FOREIGN KEY ("venue_id")
+  REFERENCES "venues" ("id")
+)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_events_on_attraction_id" ON "events" ("attraction_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_events_on_attraction_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_events_on_attraction_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_events_on_venue_id" ON "events" ("venue_id")[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180102211401"]]
+  [1m[35m (7.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateVenues (20180102211439)
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (13.8ms)[0m  [1m[35mCREATE TABLE "venues" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "city" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180102211439"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUsers (20180102211627)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "password_digest" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180102211627"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-01-02 21:31:02.142464"], ["updated_at", "2018-01-02 21:31:02.142464"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_events_on_venue_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_events_on_venue_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_events_on_attraction_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_events_on_attraction_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Madison Square Garden"], ["city", "New York"], ["created_at", "2018-01-02 21:31:10.672015"], ["updated_at", "2018-01-02 21:31:10.672015"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Radio City Music Hall"], ["city", "New York"], ["created_at", "2018-01-02 21:31:10.675752"], ["updated_at", "2018-01-02 21:31:10.675752"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "United Center"], ["city", "Chicago"], ["created_at", "2018-01-02 21:31:10.678959"], ["updated_at", "2018-01-02 21:31:10.678959"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Hollywood Pantages Theatre"], ["city", "Los Angeles"], ["created_at", "2018-01-02 21:31:10.682880"], ["updated_at", "2018-01-02 21:31:10.682880"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Capital One Arena"], ["city", "Washington"], ["created_at", "2018-01-02 21:31:10.687110"], ["updated_at", "2018-01-02 21:31:10.687110"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Amalie Arena"], ["city", "Tampa"], ["created_at", "2018-01-02 21:31:10.690630"], ["updated_at", "2018-01-02 21:31:10.690630"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "The Forum"], ["city", "Inglewood"], ["created_at", "2018-01-02 21:31:10.693887"], ["updated_at", "2018-01-02 21:31:10.693887"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "TD Garden"], ["city", "Boston"], ["created_at", "2018-01-02 21:31:10.697443"], ["updated_at", "2018-01-02 21:31:10.697443"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Barclays Center"], ["city", "Brooklyn"], ["created_at", "2018-01-02 21:31:10.700755"], ["updated_at", "2018-01-02 21:31:10.700755"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "AT&T Stadium"], ["city", "Arlington"], ["created_at", "2018-01-02 21:31:10.703865"], ["updated_at", "2018-01-02 21:31:10.703865"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Camping World Stadium"], ["city", "Orlando"], ["created_at", "2018-01-02 21:31:10.707088"], ["updated_at", "2018-01-02 21:31:10.707088"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Philips Arena"], ["city", "Atlanta"], ["created_at", "2018-01-02 21:31:10.711083"], ["updated_at", "2018-01-02 21:31:10.711083"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "SAP Center at San Jose"], ["city", "San Jose"], ["created_at", "2018-01-02 21:31:10.715948"], ["updated_at", "2018-01-02 21:31:10.715948"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Prudential Center"], ["city", "Newark"], ["created_at", "2018-01-02 21:31:10.721053"], ["updated_at", "2018-01-02 21:31:10.721053"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "CIBC Theatre"], ["city", "Chicago"], ["created_at", "2018-01-02 21:31:10.725185"], ["updated_at", "2018-01-02 21:31:10.725185"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Bridgestone Arena"], ["city", "Nashville"], ["created_at", "2018-01-02 21:31:10.729059"], ["updated_at", "2018-01-02 21:31:10.729059"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "American Airlines Center"], ["city", "Dallas"], ["created_at", "2018-01-02 21:31:10.736017"], ["updated_at", "2018-01-02 21:31:10.736017"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "AmericanAirlines Arena"], ["city", "Miami"], ["created_at", "2018-01-02 21:31:10.740134"], ["updated_at", "2018-01-02 21:31:10.740134"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Allstate Arena"], ["city", "Rosemont"], ["created_at", "2018-01-02 21:31:10.744055"], ["updated_at", "2018-01-02 21:31:10.744055"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "MetLife Stadium"], ["city", "East Rutherford"], ["created_at", "2018-01-02 21:31:10.748617"], ["updated_at", "2018-01-02 21:31:10.748617"]]
+  [1m[35m (4.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Madison Square Garden"], ["city", "New York"], ["created_at", "2018-01-02 21:31:30.201177"], ["updated_at", "2018-01-02 21:31:30.201177"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Radio City Music Hall"], ["city", "New York"], ["created_at", "2018-01-02 21:31:30.204699"], ["updated_at", "2018-01-02 21:31:30.204699"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "United Center"], ["city", "Chicago"], ["created_at", "2018-01-02 21:31:30.208002"], ["updated_at", "2018-01-02 21:31:30.208002"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Hollywood Pantages Theatre"], ["city", "Los Angeles"], ["created_at", "2018-01-02 21:31:30.211232"], ["updated_at", "2018-01-02 21:31:30.211232"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Capital One Arena"], ["city", "Washington"], ["created_at", "2018-01-02 21:31:30.215149"], ["updated_at", "2018-01-02 21:31:30.215149"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Amalie Arena"], ["city", "Tampa"], ["created_at", "2018-01-02 21:31:30.218227"], ["updated_at", "2018-01-02 21:31:30.218227"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "The Forum"], ["city", "Inglewood"], ["created_at", "2018-01-02 21:31:30.221314"], ["updated_at", "2018-01-02 21:31:30.221314"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "TD Garden"], ["city", "Boston"], ["created_at", "2018-01-02 21:31:30.224421"], ["updated_at", "2018-01-02 21:31:30.224421"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Barclays Center"], ["city", "Brooklyn"], ["created_at", "2018-01-02 21:31:30.228078"], ["updated_at", "2018-01-02 21:31:30.228078"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "AT&T Stadium"], ["city", "Arlington"], ["created_at", "2018-01-02 21:31:30.231483"], ["updated_at", "2018-01-02 21:31:30.231483"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Camping World Stadium"], ["city", "Orlando"], ["created_at", "2018-01-02 21:31:30.234788"], ["updated_at", "2018-01-02 21:31:30.234788"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Philips Arena"], ["city", "Atlanta"], ["created_at", "2018-01-02 21:31:30.238178"], ["updated_at", "2018-01-02 21:31:30.238178"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "SAP Center at San Jose"], ["city", "San Jose"], ["created_at", "2018-01-02 21:31:30.241229"], ["updated_at", "2018-01-02 21:31:30.241229"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Prudential Center"], ["city", "Newark"], ["created_at", "2018-01-02 21:31:30.245235"], ["updated_at", "2018-01-02 21:31:30.245235"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "CIBC Theatre"], ["city", "Chicago"], ["created_at", "2018-01-02 21:31:30.249575"], ["updated_at", "2018-01-02 21:31:30.249575"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Bridgestone Arena"], ["city", "Nashville"], ["created_at", "2018-01-02 21:31:30.253083"], ["updated_at", "2018-01-02 21:31:30.253083"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "American Airlines Center"], ["city", "Dallas"], ["created_at", "2018-01-02 21:31:30.257435"], ["updated_at", "2018-01-02 21:31:30.257435"]]
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "AmericanAirlines Arena"], ["city", "Miami"], ["created_at", "2018-01-02 21:31:30.262628"], ["updated_at", "2018-01-02 21:31:30.262628"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Allstate Arena"], ["city", "Rosemont"], ["created_at", "2018-01-02 21:31:30.266801"], ["updated_at", "2018-01-02 21:31:30.266801"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "MetLife Stadium"], ["city", "East Rutherford"], ["created_at", "2018-01-02 21:31:30.271873"], ["updated_at", "2018-01-02 21:31:30.271873"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mVenue Load (2.1ms)[0m  [1m[34mSELECT  "venues".* FROM "venues" LIMIT ?[0m  [["LIMIT", 11]]
+  [1m[36mVenue Load (1.0ms)[0m  [1m[34mSELECT "venues".* FROM "venues"[0m
+  [1m[36mVenue Load (0.5ms)[0m  [1m[34mSELECT "venues".* FROM "venues"[0m
+  [1m[36mVenue Load (2.9ms)[0m  [1m[34mSELECT  "venues".* FROM "venues" LIMIT ?[0m  [["LIMIT", 11]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAttractions (20180102211140)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "attractions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180102211140"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateEvents (20180102211401)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sale_date" datetime, "start_date" datetime, "attraction_id" integer, "venue_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_e67dd56481"
+FOREIGN KEY ("attraction_id")
+  REFERENCES "attractions" ("id")
+, CONSTRAINT "fk_rails_f476266cf4"
+FOREIGN KEY ("venue_id")
+  REFERENCES "venues" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_events_on_attraction_id" ON "events" ("attraction_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_events_on_attraction_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_events_on_attraction_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_events_on_venue_id" ON "events" ("venue_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180102211401"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateVenues (20180102211439)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "venues" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "city" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180102211439"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUsers (20180102211627)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "password_digest" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (2.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180102211627"]]
+  [1m[35m (3.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-01-02 22:09:50.507338"], ["updated_at", "2018-01-02 22:09:50.507338"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_events_on_venue_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_events_on_venue_id' AND type='index'
+[0m
+  [1m[35m (1.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_events_on_attraction_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_events_on_attraction_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Taylor Swift"], ["created_at", "2018-01-02 22:09:58.491867"], ["updated_at", "2018-01-02 22:09:58.491867"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "U2"], ["created_at", "2018-01-02 22:09:58.495724"], ["updated_at", "2018-01-02 22:09:58.495724"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "New York Yankees"], ["created_at", "2018-01-02 22:09:58.498900"], ["updated_at", "2018-01-02 22:09:58.498900"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Chicago Blackhawks"], ["created_at", "2018-01-02 22:09:58.501816"], ["updated_at", "2018-01-02 22:09:58.501816"]]
+  [1m[35m (6.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Anaheim Ducks"], ["created_at", "2018-01-02 22:09:58.511087"], ["updated_at", "2018-01-02 22:09:58.511087"]]
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Lady Antebellum"], ["created_at", "2018-01-02 22:09:58.515997"], ["updated_at", "2018-01-02 22:09:58.515997"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "New York Rangers"], ["created_at", "2018-01-02 22:09:58.520694"], ["updated_at", "2018-01-02 22:09:58.520694"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Dallas Cowboys"], ["created_at", "2018-01-02 22:09:58.525302"], ["updated_at", "2018-01-02 22:09:58.525302"]]
+  [1m[35m (2.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Hamilton (NY)"], ["created_at", "2018-01-02 22:09:58.533289"], ["updated_at", "2018-01-02 22:09:58.533289"]]
+  [1m[35m (3.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Monster Jam"], ["created_at", "2018-01-02 22:09:58.539564"], ["updated_at", "2018-01-02 22:09:58.539564"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (15.3ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Washington Wizards"], ["created_at", "2018-01-02 22:09:58.545390"], ["updated_at", "2018-01-02 22:09:58.545390"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Chicago Bulls"], ["created_at", "2018-01-02 22:09:58.568460"], ["updated_at", "2018-01-02 22:09:58.568460"]]
+  [1m[35m (4.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Washington Capitals"], ["created_at", "2018-01-02 22:09:58.587372"], ["updated_at", "2018-01-02 22:09:58.587372"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Los Angeles Lakers"], ["created_at", "2018-01-02 22:09:58.591236"], ["updated_at", "2018-01-02 22:09:58.591236"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "LA Clippers"], ["created_at", "2018-01-02 22:09:58.595441"], ["updated_at", "2018-01-02 22:09:58.595441"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Paul McCartney"], ["created_at", "2018-01-02 22:09:58.604180"], ["updated_at", "2018-01-02 22:09:58.604180"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Los Angeles Rams"], ["created_at", "2018-01-02 22:09:58.612210"], ["updated_at", "2018-01-02 22:09:58.612210"]]
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "The Spinners"], ["created_at", "2018-01-02 22:09:58.617494"], ["updated_at", "2018-01-02 22:09:58.617494"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "International Champions Cup North America"], ["created_at", "2018-01-02 22:09:58.620421"], ["updated_at", "2018-01-02 22:09:58.620421"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "The Belmont Stakes"], ["created_at", "2018-01-02 22:09:58.623684"], ["updated_at", "2018-01-02 22:09:58.623684"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAttraction Load (0.3ms)[0m  [1m[34mSELECT  "attractions".* FROM "attractions" ORDER BY "attractions"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVenue Load (0.4ms)[0m  [1m[34mSELECT  "venues".* FROM "venues" ORDER BY "venues"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVenue Load (0.3ms)[0m  [1m[34mSELECT  "venues".* FROM "venues" LIMIT ?[0m  [["LIMIT", 11]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Madison Square Garden"], ["city", "New York"], ["created_at", "2018-01-02 22:11:00.387377"], ["updated_at", "2018-01-02 22:11:00.387377"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Radio City Music Hall"], ["city", "New York"], ["created_at", "2018-01-02 22:11:00.391907"], ["updated_at", "2018-01-02 22:11:00.391907"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "United Center"], ["city", "Chicago"], ["created_at", "2018-01-02 22:11:00.396500"], ["updated_at", "2018-01-02 22:11:00.396500"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Hollywood Pantages Theatre"], ["city", "Los Angeles"], ["created_at", "2018-01-02 22:11:00.400369"], ["updated_at", "2018-01-02 22:11:00.400369"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Capital One Arena"], ["city", "Washington"], ["created_at", "2018-01-02 22:11:00.404127"], ["updated_at", "2018-01-02 22:11:00.404127"]]
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Amalie Arena"], ["city", "Tampa"], ["created_at", "2018-01-02 22:11:00.408878"], ["updated_at", "2018-01-02 22:11:00.408878"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Mercedes-Benz Superdome "], ["city", "New Orleans"], ["created_at", "2018-01-02 22:11:00.413984"], ["updated_at", "2018-01-02 22:11:00.413984"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "The Forum"], ["city", "Inglewood"], ["created_at", "2018-01-02 22:11:00.418237"], ["updated_at", "2018-01-02 22:11:00.418237"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "TD Garden"], ["city", "Boston"], ["created_at", "2018-01-02 22:11:00.422482"], ["updated_at", "2018-01-02 22:11:00.422482"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "AT&T Stadium"], ["city", "Arlington"], ["created_at", "2018-01-02 22:11:00.427597"], ["updated_at", "2018-01-02 22:11:00.427597"]]
+  [1m[35m (3.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Barclays Center"], ["city", "Brooklyn"], ["created_at", "2018-01-02 22:11:00.436331"], ["updated_at", "2018-01-02 22:11:00.436331"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Camping World Stadium"], ["city", "Orlando"], ["created_at", "2018-01-02 22:11:00.442306"], ["updated_at", "2018-01-02 22:11:00.442306"]]
+  [1m[35m (3.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Philips Arena"], ["city", "Atlanta"], ["created_at", "2018-01-02 22:11:00.449097"], ["updated_at", "2018-01-02 22:11:00.449097"]]
+  [1m[35m (3.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "SAP Center at San Jose"], ["city", "San Jose"], ["created_at", "2018-01-02 22:11:00.456834"], ["updated_at", "2018-01-02 22:11:00.456834"]]
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Prudential Center"], ["city", "Newark"], ["created_at", "2018-01-02 22:11:00.462253"], ["updated_at", "2018-01-02 22:11:00.462253"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "CIBC Theatre"], ["city", "Chicago"], ["created_at", "2018-01-02 22:11:00.468301"], ["updated_at", "2018-01-02 22:11:00.468301"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Bridgestone Arena"], ["city", "Nashville"], ["created_at", "2018-01-02 22:11:00.471755"], ["updated_at", "2018-01-02 22:11:00.471755"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Richard Rodgers Theatre"], ["city", "New York"], ["created_at", "2018-01-02 22:11:00.475510"], ["updated_at", "2018-01-02 22:11:00.475510"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "American Airlines Center"], ["city", "Dallas"], ["created_at", "2018-01-02 22:11:00.479892"], ["updated_at", "2018-01-02 22:11:00.479892"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "venues" ("name", "city", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Minskoff Theatre"], ["city", "New York"], ["created_at", "2018-01-02 22:11:00.483412"], ["updated_at", "2018-01-02 22:11:00.483412"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Taylor Swift"], ["created_at", "2018-01-02 22:11:00.817760"], ["updated_at", "2018-01-02 22:11:00.817760"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "U2"], ["created_at", "2018-01-02 22:11:00.820935"], ["updated_at", "2018-01-02 22:11:00.820935"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "New York Yankees"], ["created_at", "2018-01-02 22:11:00.824218"], ["updated_at", "2018-01-02 22:11:00.824218"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Chicago Blackhawks"], ["created_at", "2018-01-02 22:11:00.828190"], ["updated_at", "2018-01-02 22:11:00.828190"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Anaheim Ducks"], ["created_at", "2018-01-02 22:11:00.832479"], ["updated_at", "2018-01-02 22:11:00.832479"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Lady Antebellum"], ["created_at", "2018-01-02 22:11:00.835801"], ["updated_at", "2018-01-02 22:11:00.835801"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "New York Rangers"], ["created_at", "2018-01-02 22:11:00.839343"], ["updated_at", "2018-01-02 22:11:00.839343"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Dallas Cowboys"], ["created_at", "2018-01-02 22:11:00.843278"], ["updated_at", "2018-01-02 22:11:00.843278"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Hamilton (NY)"], ["created_at", "2018-01-02 22:11:00.846471"], ["updated_at", "2018-01-02 22:11:00.846471"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Monster Jam"], ["created_at", "2018-01-02 22:11:00.849402"], ["updated_at", "2018-01-02 22:11:00.849402"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Washington Wizards"], ["created_at", "2018-01-02 22:11:00.852435"], ["updated_at", "2018-01-02 22:11:00.852435"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Chicago Bulls"], ["created_at", "2018-01-02 22:11:00.857198"], ["updated_at", "2018-01-02 22:11:00.857198"]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Washington Capitals"], ["created_at", "2018-01-02 22:11:00.863926"], ["updated_at", "2018-01-02 22:11:00.863926"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Los Angeles Lakers"], ["created_at", "2018-01-02 22:11:00.867291"], ["updated_at", "2018-01-02 22:11:00.867291"]]
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "LA Clippers"], ["created_at", "2018-01-02 22:11:00.871861"], ["updated_at", "2018-01-02 22:11:00.871861"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Paul McCartney"], ["created_at", "2018-01-02 22:11:00.875084"], ["updated_at", "2018-01-02 22:11:00.875084"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Los Angeles Rams"], ["created_at", "2018-01-02 22:11:00.879623"], ["updated_at", "2018-01-02 22:11:00.879623"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "The Spinners"], ["created_at", "2018-01-02 22:11:00.886038"], ["updated_at", "2018-01-02 22:11:00.886038"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "International Champions Cup North America"], ["created_at", "2018-01-02 22:11:00.889972"], ["updated_at", "2018-01-02 22:11:00.889972"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "attractions" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "The Belmont Stakes"], ["created_at", "2018-01-02 22:11:00.894187"], ["updated_at", "2018-01-02 22:11:00.894187"]]
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAttraction Load (0.2ms)[0m  [1m[34mSELECT  "attractions".* FROM "attractions" ORDER BY "attractions"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVenue Load (0.3ms)[0m  [1m[34mSELECT  "venues".* FROM "venues" ORDER BY "venues"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAttraction Load (0.2ms)[0m  [1m[34mSELECT  "attractions".* FROM "attractions" WHERE "attractions"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mVenue Load (0.6ms)[0m  [1m[34mSELECT  "venues".* FROM "venues" WHERE "venues"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.4ms)[0m  [1m[32mINSERT INTO "events" ("name", "sale_date", "start_date", "attraction_id", "venue_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Taylor Swift Best Friend Tour"], ["sale_date", "2018-01-02 22:13:29.551606"], ["start_date", "2018-01-02 22:13:29.551607"], ["attraction_id", 1], ["venue_id", 1], ["created_at", "2018-01-02 22:13:29.593913"], ["updated_at", "2018-01-02 22:13:29.593913"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
