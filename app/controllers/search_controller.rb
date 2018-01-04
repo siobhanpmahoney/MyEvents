@@ -13,8 +13,11 @@ class SearchController < ApplicationController
 
   def results
     # @keyword = params[:format]
-    @event_results = event_search()
-    @search_event_results = creates_event_instances(@event_results).map
+    @event_results = event_search
+    @search_event_results = creates_event_instances(@event_results)
+    @attraction_results = attraction_search()
+    @search_attraction_results = creates_attraction_instances(@attraction_results)
+    byebug
 
   end
 
@@ -32,8 +35,10 @@ class SearchController < ApplicationController
 
   def creates_event_instances(json_results)
     json_results["_embedded"]["events"].map do |e|
-      ev = Event.create(name: e["name"], sale_date: e["sales"]["public"]["startDateTime"], start_date: e["dates"]["start"]["dateTime"], venue: ven = Venue.find_or_create_by(name: e["_embedded"]["venues"][0]["name"]))
+      ev = Event.create(name: e["name"], sale_date: e["sales"]["public"]["startDateTime"], start_date: e["dates"]["start"]["dateTime"])
+      ven = Venue.find_or_create_by(name: e["_embedded"]["venues"][0]["name"])
       ven.update(city: e["_embedded"]["venues"][0]["city"]["name"])
+      ev.update(venue: ven)
       if e["_embedded"]["attractions"]
         e["_embedded"]["attractions"].each do |attr|
           ev.attractions << Attraction.find_or_create_by(name: attr["name"])
@@ -42,6 +47,21 @@ class SearchController < ApplicationController
       ev
     end
   end
+
+  def attraction_search
+    attraction_keyword_search = params[:format].split.join("+").to_s
+    attraction_keyword_search_path = "https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=20&keyword=#{attraction_keyword_search}"
+    JSON.parse(RestClient.get(attraction_keyword_search_path))
+  end
+
+  def creates_attraction_instances(attraction_json_results)
+    attraction_json_results["_embedded"]["attractions"].map do |attr|
+      Attraction.create(name: attr["name"])
+    end
+  end
+
+
+
 
 
 

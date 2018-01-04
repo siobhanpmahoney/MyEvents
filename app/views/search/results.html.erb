@@ -6,3 +6,10 @@ Where you land after a search
  <li><%= link_to e[:name], event_path(e.id) %></li>
  <%end%>
  </ul>
+
+ <h2>Attractions</h2>
+ <ul>
+ <% @search_attraction_results.each do |attr| %>
+ <li><%= link_to attr[:name], attraction_path(attr.id) %></li>
+ <%end%>
+ </ul>
