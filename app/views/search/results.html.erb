@@ -1,5 +1,22 @@
 Where you land after a search
 
 <h2>Events</h2>
+ <ul>
+ <% @search_event_results.each do |e| %>
+ <li><%= link_to e[:name], event_path(e.id) %></li>
+ <%end%>
+ </ul>
 
-<%= @keyword %>
+<h2>Attractions</h2>
+ <ul>
+ <% @search_attraction_results.each do |attr| %>
+ <li><%= link_to attr[:name], attraction_path(attr.id) %></li>
+ <%end%>
+ </ul>
+
+<h2>Venues</h2>
+ <ul>
+ <% @search_venue_results.each do |v| %>
+ <li><%= link_to v[:name], venue_path(v.id) %></li>
+ <%end%>
+ </ul>
