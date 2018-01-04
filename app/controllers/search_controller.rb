@@ -31,7 +31,7 @@ class SearchController < ApplicationController
   private
 
   def event_search
-    keyword_search = params[:format].split.join('+').to_s
+    keyword_search = params[:format].split.join("+").to_s
     keyword_search_path = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=20&keyword=#{keyword_search}"
     JSON.parse(RestClient.get(keyword_search_path))
   end
@@ -68,7 +68,7 @@ class SearchController < ApplicationController
   end
 
   def venue_search
-    venue_keyword_search = params[:format].split.join('+').to_s
+    venue_keyword_search = params[:format].split.join("+").to_s
     venue_keyword_search_path = "https://app.ticketmaster.com/discovery/v2/venues.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=20&keyword=#{venue_keyword_search}"
     JSON.parse(RestClient.get(venue_keyword_search_path))
   end
