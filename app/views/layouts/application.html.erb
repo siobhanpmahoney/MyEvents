@@ -30,12 +30,15 @@
     <% end %>
 
 
-    <%= form_tag(search_path, id: "search-form") do %>
-    <%= text_field_tag :keyword, params[:keyword], placeholder: "Search" %>
-    <%= submit_tag "Search" %>
-    <% end %>
+    <!-- <%= form_tag ({controller: 'search', action: 'results', method: 'post'}) do %>
+    <%= text_field_tag(:format) %>
+    <input type=submit value='search'>
+    <% end %> -->
 
-
+    <form action="/search">
+      <input name="format" />
+      <input type="submit" value="search">
+    </form>
 
   </div>
 

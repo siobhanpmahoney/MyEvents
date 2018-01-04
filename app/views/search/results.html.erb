@@ -1,5 +1,8 @@
 Where you land after a search
 
-<h2>Events</h2>
-
-<%= @keyword %>
+ <h2>Events</h2>
+ <ul>
+ <% @search_event_results.each do |e| %>
+ <li><%= link_to e[:name], event_path(e.id) %></li>
+ <%end%>
+ </ul>
