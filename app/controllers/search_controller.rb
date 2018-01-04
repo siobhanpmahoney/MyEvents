@@ -17,7 +17,10 @@ class SearchController < ApplicationController
     @search_event_results = creates_event_instances(@event_results)
     @attraction_results = attraction_search()
     @search_attraction_results = creates_attraction_instances(@attraction_results)
-    byebug
+    @venue_results = venue_search
+
+    @search_venue_results = creates_venue_instances(@venue_results)
+
 
   end
 
@@ -57,6 +60,20 @@ class SearchController < ApplicationController
   def creates_attraction_instances(attraction_json_results)
     attraction_json_results["_embedded"]["attractions"].map do |attr|
       Attraction.create(name: attr["name"])
+    end
+  end
+
+  def venue_search
+    venue_keyword_search = params[:format].split.join("+").to_s
+    venue_keyword_search_path = "https://app.ticketmaster.com/discovery/v2/venues.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=20&keyword=#{venue_keyword_search}"
+    JSON.parse(RestClient.get(venue_keyword_search_path))
+  end
+
+  def creates_venue_instances(venue_json_results)
+    venue_json_results["_embedded"]["venues"].map do |v|
+      ven = Venue.find_or_create_by(name: v["name"])
+      ven.update(city: v["city"]["name"])
+      ven
     end
   end
 

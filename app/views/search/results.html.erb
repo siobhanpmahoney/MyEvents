@@ -13,3 +13,10 @@ Where you land after a search
  <li><%= link_to attr[:name], attraction_path(attr.id) %></li>
  <%end%>
  </ul>
+
+ <h2>Venues</h2>
+ <ul>
+ <% @search_venue_results.each do |v| %>
+ <li><%= link_to v[:name], venue_path(v.id) %></li>
+ <%end%>
+ </ul>
