@@ -28,100 +28,53 @@ attractions["_embedded"]["attractions"].each do |attr|
 end
 
 
-events = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200"))
+
+def seed_events(events)
+
+  events["_embedded"]["events"].each do |event|
+     ev = Event.create(
+      name: event["name"],
+      sale_start_date: event["sales"]["public"]["startDateTime"],
+      sale_end_date: event["sales"]["public"]["endDateTime"],
+      price_min: event["priceRanges"][0]["min"],
+      price_max: event["priceRanges"][0]["max"],
+      # img_1: event["sales"]["public"]["endDateTime"],
+      start_date: event["dates"]["start"]["dateTime"],
+      category: event["classifications"][0]["segment"]["name"],
+      genre: event["classifications"][0]["genre"]["name"],
+      subgenre: event["classifications"][0]["subGenre"]["name"],
+      venue: ven = Venue.find_or_create_by(name: event["_embedded"]["venues"][0]["name"]))
+      ven.update(city: event["_embedded"]["venues"][0]["city"]["name"] )
 
 
-events["_embedded"]["events"].each do |event|
-   ev = Event.create(
-    name: event["name"],
-    sale_date: event["sales"]["public"]["startDateTime"],
-    start_date: event["dates"]["start"]["dateTime"],
-    venue: ven = Venue.find_or_create_by(name: event["_embedded"]["venues"][0]["name"]))
-    ven.update(city: event["_embedded"]["venues"][0]["city"]["name"] )
-
-
-    if event["_embedded"]["attractions"]
-      event["_embedded"]["attractions"].each do |attr|
-      ev.attractions << Attraction.find_or_create_by(name: attr["name"])
+      if event["_embedded"]["attractions"]
+        event["_embedded"]["attractions"].each do |attr|
+        ev.attractions << Attraction.find_or_create_by(name: attr["name"])
+        end
       end
-    end
 
+    end
 end
 
 
+ev = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200"))
 
+seed_events(ev)
 
+ev = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200&page=2"))
 
+seed_events(ev)
 
-events = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200&page=2"))
+ev = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200&page=3"))
 
-
-events["_embedded"]["events"].each do |event|
-   ev = Event.create(
-    name: event["name"],
-    sale_date: event["sales"]["public"]["startDateTime"],
-    start_date: event["dates"]["start"]["dateTime"],
-    venue: ven = Venue.find_or_create_by(name: event["_embedded"]["venues"][0]["name"]))
-    ven.update(city: event["_embedded"]["venues"][0]["city"]["name"])
-
-
-    if event["_embedded"]["attractions"]
-      event["_embedded"]["attractions"].each do |attr|
-      ev.attractions << Attraction.find_or_create_by(name: attr["name"])
-      end
-    end
-
-end
-
-
-
-
-
-
-events = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200&page=3"))
-
-
-events["_embedded"]["events"].each do |event|
-   ev = Event.create(
-    name: event["name"],
-    sale_date: event["sales"]["public"]["startDateTime"],
-    start_date: event["dates"]["start"]["dateTime"],
-    venue: ven = Venue.find_or_create_by(name: event["_embedded"]["venues"][0]["name"]))
-    ven.update(city: event["_embedded"]["venues"][0]["city"]["name"] )
-
-
-    if event["_embedded"]["attractions"]
-      event["_embedded"]["attractions"].each do |attr|
-      ev.attractions << Attraction.find_or_create_by(name: attr["name"])
-      end
-    end
-
-end
-
-
-
-
-
+seed_events(ev)
 
 events = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200&page=4"))
 
-
-events["_embedded"]["events"].each do |event|
-   ev = Event.create(
-    name: event["name"],
-    sale_date: event["sales"]["public"]["startDateTime"],
-    start_date: event["dates"]["start"]["dateTime"],
-    venue: ven = Venue.find_or_create_by(name: event["_embedded"]["venues"][0]["name"]))
-    ven.update(city: event["_embedded"]["venues"][0]["city"]["name"] )
+seed_events(ev)
 
 
-    if event["_embedded"]["attractions"]
-      event["_embedded"]["attractions"].each do |attr|
-      ev.attractions << Attraction.find_or_create_by(name: attr["name"])
-      end
-    end
 
-end
 
 
 
@@ -142,6 +95,7 @@ end
    end
 
 end
+
 
 # if event["_embedded"]["attractions"]
 #   event["_embedded"]["attractions"].each do |attr|

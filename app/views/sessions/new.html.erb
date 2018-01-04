@@ -1,0 +1,7 @@
+
+
+<%= form_tag login_path do %>
+<%= text_field_tag :username, nil, placeholder: "Enter your Username" %>
+<%= password_field_tag :password, nil, placeholder: "Enter your Password" %>
+<%= submit_tag "Login" %>
+<% end %>
