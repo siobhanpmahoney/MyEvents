@@ -6,7 +6,7 @@ class Event < ApplicationRecord
 
   belongs_to :venue
   accepts_nested_attributes_for :attractions
-  accepts_nested_attrubutes_for :categories
+  accepts_nested_attributes_for :categories
 
   def attraction_attributes=(attraction_attributes)
     attraction_attributes.each do |attraction_attribute|
