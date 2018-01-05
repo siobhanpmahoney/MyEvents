@@ -1,8 +1,9 @@
 class EventsController < ApplicationController
 
-
-  def index
+  skip_before_action :authorize
   
+  def index
+
     if params[:search]
       @events = Event.search(params[:search]).order("created_at DESC")
     else

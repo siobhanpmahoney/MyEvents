@@ -4,6 +4,8 @@ require 'json'
 
 
 class SearchController < ApplicationController
+
+  skip_before_action :authorize
   #
   # def search
   #   @keyword = params[:format]

@@ -36,8 +36,8 @@ def seed_events(events)
       name: event["name"],
       sale_start_date: event["sales"]["public"]["startDateTime"],
       sale_end_date: event["sales"]["public"]["endDateTime"],
-      price_min: event["priceRanges"][0]["min"],
-      price_max: event["priceRanges"][0]["max"],
+      # price_min: event["priceRanges"][0]["min"],
+      # price_max: event["priceRanges"][0]["max"],
       # img_1: event["sales"]["public"]["endDateTime"],
       start_date: event["dates"]["start"]["dateTime"],
       category: event["classifications"][0]["segment"]["name"],
@@ -78,23 +78,7 @@ seed_events(ev)
 
 
 
- def search_bar
-
-  @events = JSON.parse(RestClient("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=20&keyword=#{params[:keyword]}"))
-  @venues = JSON.parse(RestClient("https://app.ticketmaster.com/discovery/v2/venues.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=20&keyword=#{params[:keyword]}"))
-  @attractions = JSON.parse(RestClient("https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=20&keyword=#{params[:keyword]}"))
-
-   if ["_embedded"]["events"]["name"]
-
-   elsif["_embedded"]["events"]["name"]
-
-   elsif["_embedded"]["events"]["name"]
-
-   else
-     "There are now search results returned"
-   end
-
-end
+ 
 
 
 # if event["_embedded"]["attractions"]

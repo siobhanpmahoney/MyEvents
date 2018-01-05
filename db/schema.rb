@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180104225200) do
+ActiveRecord::Schema.define(version: 20180104225704) do
 
   create_table "attraction_events", force: :cascade do |t|
     t.integer "event_id"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 20180104225200) do
 
   create_table "attractions", force: :cascade do |t|
     t.string "name"
+    t.string "categories"
+    t.string "genre"
+    t.string "subgenre"
+    t.string "twitter"
+    t.string "facebook"
+    t.string "instagram"
+    t.string "youtube"
+    t.string "tm_attraction_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -49,12 +57,31 @@ ActiveRecord::Schema.define(version: 20180104225200) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
-    t.datetime "sale_date"
+    t.datetime "sale_start_date"
+    t.datetime "sale_end_date"
     t.datetime "start_date"
+    t.float "price_min"
+    t.float "price_max"
+    t.string "image_1"
+    t.string "tm_url"
+    t.string "category"
+    t.string "genre"
+    t.string "subgenre"
+    t.string "tm_event_id"
     t.integer "venue_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["venue_id"], name: "index_events_on_venue_id"
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "friend_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["friend_id"], name: "index_relationships_on_friend_id"
+    t.index ["user_id", "friend_id"], name: "index_relationships_on_user_id_and_friend_id", unique: true
+    t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -75,7 +102,13 @@ ActiveRecord::Schema.define(version: 20180104225200) do
 
   create_table "venues", force: :cascade do |t|
     t.string "name"
+    t.string "address"
     t.string "city"
+    t.string "state"
+    t.string "postal_code"
+    t.string "general_info"
+    t.string "parking_details"
+    t.string "tm_venue_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
