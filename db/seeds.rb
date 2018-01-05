@@ -16,30 +16,18 @@ def seed_events(events)
         end
         if event["priceRanges"][0].keys.include?("max")
           ev.update(price_max: event["priceRanges"][0]["max"])
-      sale_end_date: event["sales"]["public"]["endDateTime"],
-      # price_min: event["priceRanges"][0]["min"],
-      # price_max: event["priceRanges"][0]["max"],
-      # img_1: event["sales"]["public"]["endDateTime"],
-      start_date: event["dates"]["start"]["dateTime"],
-      category: event["classifications"][0]["segment"]["name"],
-      genre: event["classifications"][0]["genre"]["name"],
-      subgenre: event["classifications"][0]["subGenre"]["name"],
-      venue: ven = Venue.find_or_create_by(name: event["_embedded"]["venues"][0]["name"]))
-      ven.update(city: event["_embedded"]["venues"][0]["city"]["name"] )
-
-
-      if event["_embedded"]["attractions"]
-        event["_embedded"]["attractions"].each do |attr|
-        ev.attractions << Attraction.find_or_create_by(name: attr["name"])
         end
       end
+
+
+      # img_1: event["sales"]["public"]["endDateTime"],
 
 
       ven = Venue.find_or_create_by(tm_venue_id: event["_embedded"]["venues"][0]["id"])
       ven.update(
         address: event["_embedded"]["venues"][0]["address"]["line1"],
         city: event["_embedded"]["venues"][0]["city"]["name"])
-        if  event["_embedded"]["venues"][0]["generalInfo"] != nil
+        if event["_embedded"]["venues"][0]["generalInfo"] != nil
           ven.update(general_info: event["_embedded"]["venues"][0]["generalInfo"]["generalRule"])
         end
 
@@ -59,11 +47,8 @@ def seed_events(events)
           ven.update(state: event["_embedded"]["venues"][0]["state"]["stateCode"])
         end
 
+        ven.events << ev
 
-
-
-         ven.events << ev
-        ev.update(venue: ven)
 
         if event["_embedded"].keys.include?("attractions")
           event["_embedded"]["attractions"].each do |attr|
@@ -85,7 +70,7 @@ def seed_events(events)
           end
         end
 
-                # , youtube: attr["externalLinks"]["youtube"][0]["url"])
+
 
 
       if event.keys.include?("classifications")
@@ -107,6 +92,7 @@ def seed_events(events)
       end
     end
   end
+
 
 
 
@@ -141,42 +127,46 @@ def seed_events(events)
       attractions = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=100"))
 
 
-      def seed_attractions
-        attractions["_embedded"]["attractions"].each do |attr|
-          Attraction.create(name: attr["name"],
-            twitter: attr["externalLinks"]["twitter"][0]["url"],
-            facebook: attr["externalLinks"]["facebook"][0]["url"],
-            instagram: attr["externalLinks"]["instagram"][0]["url"],
-            youtube: attr["externalLinks"]["youtube"][0]["url"],
-            tm_attraction_id: attr["id"])
-
-            at_ev = JSON.parse(RestClient.get( "https://app.ticketmaster.com/discovery/v2/events.json?attractionId=#{attr[:tm_attraction_id]}&apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq"))["_embedded"]["attractions"]
-            if at_ev != []
-              at_ev.each do |event|
-                ev = Event.create(
-                  name: event["name"],
-                  sale_start_date: event["sales"]["public"]["startDateTime"],
-                  sale_end_date: event["sales"]["public"]["endDateTime"],
-                  price_min: event["priceRanges"][0]["min"],
-                  price_max: event["priceRanges"][0]["max"],
-                  # img_1: event["sales"]["public"]["endDateTime"],
-                  start_date: event["dates"]["start"]["dateTime"],
-                  venue: ven = Venue.find_or_create_by(name: event["_embedded"]["venues"][0]["name"]))
-                  ven.update(
-                    address: event["_embedded"]["venues"][0]["address"]["line1"],
-                    city: event["_embedded"]["venues"][0]["city"]["name"],
-                    general_info: event["_embedded"]["venues"][0]["generalInfo"]["generalRule"],
-                    name: event["_embedded"]["venues"][0]["name"],
-                    parking_details: event["_embedded"]["venues"][0]["parkingDetail"],
-                    postal_code: event["_embedded"]["venues"][0]["postalCode"],
-                    state: event["_embedded"]["venues"][0]["state"]["stateCode"],
-                    tm_venue_id: event["_embedded"]["venues"][0]["id"]
-                  )
-
-                end
-              end
-            end
-          end
+      # def seed_attractions(attractions)
+      #   attractions["_embedded"]["attractions"].each do |attr|
+      #     new_attr = Attraction.find_or_create_by(tm_attraction_id: attr["id"])
+      #       new_attr.update(name: attr["name"])
+      #
+      #       if attr.keys.include?("externalLinks")
+      #         if attr["externalLinks"].keys.include?("twitter")
+      #           new_attr.update(twitter: attr["externalLinks"]["twitter"][0]["url"])
+      #         end
+      #         if attr["externalLinks"].keys.include?("facebook")
+      #           new_attr.update(facebook: attr["externalLinks"]["facebook"][0]["url"])
+      #         end
+      #         if attr["externalLinks"].keys.include?("instagram")
+      #           new_attr.update(instagram: attr["externalLinks"]["instagram"][0]["url"])
+      #         end
+      #       end
+      #
+      #
+      #
+      #       at_ev = JSON.parse(RestClient.get( "https://app.ticketmaster.com/discovery/v2/events.json?attractionId=#{attr[:tm_attraction_id]}&apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq"))["_embedded"]["attractions"]
+      #       if at_ev != []
+      #         at_ev.each do |event|
+      #           ev = Event.find_or_create_by(tm_event_id: event["id"])
+      #           ev.update(name: event["name"],
+      #             sale_start_date: event["sales"]["public"]["startDateTime"],
+      #             sale_end_date: event["sales"]["public"]["endDateTime"], start_date: event["dates"]["start"]["dateTime"])
+      #             if event["priceRanges"] != nil
+      #               if event["priceRanges"][0].keys.include?("min")
+      #                 ev.update(price_min: event["priceRanges"][0]["min"])
+      #               end
+      #               if event["priceRanges"][0].keys.include?("max")
+      #                 ev.update(price_max: event["priceRanges"][0]["max"])
+      #               end
+      #             end
+      #
+      #
+      #           end
+      #         end
+      #       end
+      #     end
 
 
 
@@ -194,17 +184,17 @@ def seed_venues(venues)
       postal_code: v["postalCode"],
       state: v["state"]["name"])
 
-     # venue_events = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?venueId=#{v[:tm_venue_id]}&apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq"))["_embedded"]["events"]
-     #
-     # if venue_events != nil
-     #
-     #   venue_events.each do |ve_ev|
-     #     ev500 = Event.find_or_create_by(tm_event_id: ve_ev["id"])
-     #     ev500.update(
-     #       name: ve_ev["name"],
-     #       sale_start_date: ve_ev["sales"]["public"]["startDateTime"],
-     #       sale_end_date: ve_ev["sales"]["public"]["endDateTime"],
-     #       start_date: ve_ev["dates"]["start"]["dateTime"], venue: Venue.find(v[:id]))
+     venue_events = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?venueId=#{v[:tm_venue_id]}&apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq"))["_embedded"]["events"]
+
+     if venue_events != nil
+
+       venue_events.each do |ve_ev|
+         ev500 = Event.find_or_create_by(tm_event_id: ve_ev["id"])
+         ev500.update(
+           name: ve_ev["name"],
+           sale_start_date: ve_ev["sales"]["public"]["startDateTime"],
+           sale_end_date: ve_ev["sales"]["public"]["endDateTime"],
+           start_date: ve_ev["dates"]["start"]["dateTime"], venue: Venue.find(v[:id]))
 
            if ev500["priceRanges"] != nil
              if ve_ev["priceRanges"][0].keys.include?("min")
@@ -215,25 +205,23 @@ def seed_venues(venues)
              end
            end
 
-    #
-    #       if ve_ev["_embedded"]["attractions"]
-    #         ve_ev["_embedded"]["attractions"].each do |attr|
-    #           a = Attraction.find_or_create_by(tm_attraction_id: attr["id"])
-    #           a.update(name: attr["name"], twitter: attr["externalLinks"]["twitter"][0]["url"], facebook: attr["externalLinks"]["facebook"][0]["url"], instagram: attr["externalLinks"]["instagram"][0]["url"])
-    #           # , youtube: attr["externalLinks"]["youtube"][0]["url"])
-    #
-    #           ev500.attractions << a
-    #
-    #
-    #         end
-    #       end
-    #     end
-    #   end
-    # end
+
+          if ve_ev["_embedded"]["attractions"]
+            ve_ev["_embedded"]["attractions"].each do |attr|
+              a = Attraction.find_or_create_by(tm_attraction_id: attr["id"])
+              a.update(name: attr["name"], twitter: attr["externalLinks"]["twitter"][0]["url"], facebook: attr["externalLinks"]["facebook"][0]["url"], instagram: attr["externalLinks"]["instagram"][0]["url"])
+              # , youtube: attr["externalLinks"]["youtube"][0]["url"])
+
+              ev500.attractions << a
+
+
+            end
+          end
+        end
+      end
+    end
   end
-end
-  end
-end
+
 
 
       #         #
