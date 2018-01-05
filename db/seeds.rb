@@ -16,6 +16,21 @@ def seed_events(events)
         end
         if event["priceRanges"][0].keys.include?("max")
           ev.update(price_max: event["priceRanges"][0]["max"])
+      sale_end_date: event["sales"]["public"]["endDateTime"],
+      # price_min: event["priceRanges"][0]["min"],
+      # price_max: event["priceRanges"][0]["max"],
+      # img_1: event["sales"]["public"]["endDateTime"],
+      start_date: event["dates"]["start"]["dateTime"],
+      category: event["classifications"][0]["segment"]["name"],
+      genre: event["classifications"][0]["genre"]["name"],
+      subgenre: event["classifications"][0]["subGenre"]["name"],
+      venue: ven = Venue.find_or_create_by(name: event["_embedded"]["venues"][0]["name"]))
+      ven.update(city: event["_embedded"]["venues"][0]["city"]["name"] )
+
+
+      if event["_embedded"]["attractions"]
+        event["_embedded"]["attractions"].each do |attr|
+        ev.attractions << Attraction.find_or_create_by(name: attr["name"])
         end
       end
 

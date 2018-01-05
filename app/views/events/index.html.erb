@@ -1,6 +1,6 @@
 <% @events.each do |event| %>
   Name: <%= link_to event.name, event %> <br>
-  Sale Date: <%= event.sale_date %> <br>
+  Sale Date: <%= event.sale_start_date %> <br>
   Start Date: <%= event.start_date %> <br>
   Venue: <%= link_to event.venue.name, event.venue %> <br>
 
