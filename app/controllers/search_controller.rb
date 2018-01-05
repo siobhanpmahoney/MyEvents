@@ -6,24 +6,14 @@ require 'json'
 class SearchController < ApplicationController
 
   skip_before_action :authorize
-  #
-  # def search
-  #   @keyword = params[:format]
-  #   @event_results = event_search()
-  #   render 'results'
-  # end
 
   def results
-    # @keyword = params[:format]
     @event_results = event_search
     @search_event_results = creates_event_instances(@event_results)
     @attraction_results = attraction_search()
     @search_attraction_results = creates_attraction_instances(@attraction_results)
     @venue_results = venue_search
-
     @search_venue_results = creates_venue_instances(@venue_results)
-
-
   end
 
   def show
@@ -94,7 +84,5 @@ class SearchController < ApplicationController
 
 
 
-  # @venues = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/venues.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=20&keyword=#{@keyword.split.join('+')}"))
-  # @attractions = JSON.parse(RestClient.get('https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=20&keyword=#{@keyword.split.join('+')}'))
 
 end

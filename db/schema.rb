@@ -23,9 +23,6 @@ ActiveRecord::Schema.define(version: 20180105041908) do
 
   create_table "attractions", force: :cascade do |t|
     t.string "name"
-    t.string "categories"
-    t.string "genre"
-    t.string "subgenre"
     t.string "twitter"
     t.string "facebook"
     t.string "instagram"

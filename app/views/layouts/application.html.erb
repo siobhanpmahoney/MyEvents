@@ -62,16 +62,22 @@
 
 <!-- second nav bar below -->
 
-  <div class="nav navbar bg-secondary">
+  <div class="nav navbar bg-secondary text-light">
 
     <% if loggedin? %>
     Hello <%= current_user.first_name %>!
     <% end %>
 
-    Music
-    Sports
-    Arts & Theatre
-    Family
+
+      <%= link_to "Music", music_events_url, class: "text-light" %>
+
+      <%= link_to "Sports", sports_events_url, class: "text-light" %>
+
+      <%= link_to "Arts", arts_events_url, class: "text-light" %>
+
+      <%= link_to "Miscellaneous Events", misc_events_url, class: "text-light" %>
+
+
 
     <% Attraction.all.any? do |att| %>
       <% if current_page?(attraction_path(att)) %>
