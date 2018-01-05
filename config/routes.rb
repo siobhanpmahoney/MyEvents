@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :categories
+
   resources :users
   resources :venues
   resources :events
@@ -15,10 +15,10 @@ Rails.application.routes.draw do
   get "signup", to: "users#new"
   delete "logout", to: "sessions#destroy"
 
-  get 'music_events', to: 'categories#all_music_events'
-  get 'sports_events', to: 'categories#all_sports_events'
-  get 'arts_events', to: 'categories#all_arts_events'
-  get 'misc_events', to: 'categories#all_misc_events'
+  get 'music_events', to: 'categories#music_events'
+  get 'sports_events', to: 'categories#sports_events'
+  get 'arts_events', to: 'categories#arts_events'
+  get 'misc_events', to: 'categories#misc_events'
 
 
 end

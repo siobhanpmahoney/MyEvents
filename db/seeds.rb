@@ -2,6 +2,39 @@ require 'pry'
 require 'rest-client'
 require 'json'
 
+50.times do
+ fn = Faker::Name.first_name
+ ln = Faker::Name.last_name
+
+ User.create(
+    username: Faker::Superhero.name,
+    password: "hello",
+    first_name: fn,
+    last_name: ln,
+    birth_date: Faker::Date.birthday(18, 65),
+    email: Faker::Internet.email,
+    address: Faker::Address.street_address,
+    address2: Faker::Address.secondary_address,
+    city: Faker::Address.city,
+    state: Faker::Address.state,
+    postal_code: Faker::Address.zip_code,
+    cc_number: Faker::Number.number(16),
+    cc_expiration: Faker::Date.forward(60),
+    cc_name: fn + ln,
+    cc_security_code: Faker::Number.number(3)
+ )
+end
+
+
+
+
+User.all[0..4].each do |user|
+ user.add_friend(User.last)
+ user.add_friend(User.all[-2])
+ user.add_friend(User.all[-3])
+ user.add_friend(User.all[-4])
+ user.add_friend(User.all[-5])
+end
 
 def seed_events(events)
   events["_embedded"]["events"].each do |event|
@@ -98,19 +131,19 @@ def seed_events(events)
 
 
 
-      ev = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200"))
+      ev = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=50"))
 
       seed_events(ev)
 
-      ev1 = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200&page=2"))
+      ev1 = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=50&page=2"))
 
       seed_events(ev1)
 
-      ev2 = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200&page=3"))
+      ev2 = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=50&page=3"))
 
       seed_events(ev2)
 
-      events3 = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=200&page=4"))
+      events3 = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=50&page=4"))
 
       seed_events(events3)
       #

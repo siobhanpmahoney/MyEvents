@@ -9,7 +9,7 @@ class WelcomeController < ApplicationController
   def home
     @events = Event.all
     @user = current_user
-    @nearby_and_upcoming_events = Event.all.select {|e| e.venue.city == "Brooklyn"}.sort_by {|ev| ev.start_date }
+    @nearby_and_upcoming_events = Event.all.select {|e| e.venue.city == @user.city}.sort_by {|ev| ev.start_date }
   end
 
 

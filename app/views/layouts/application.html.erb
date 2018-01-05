@@ -24,6 +24,8 @@
             <input type="submit" value="search" >
           </form>
 
+          <%= render 'categories/category_links' %>
+
         </div>
 
         <div class="col-sm">
@@ -70,6 +72,8 @@
     Sports
     Arts & Theatre
     Family
+
+
 
     <% Attraction.all.any? do |att| %>
       <% if current_page?(attraction_path(att)) %>

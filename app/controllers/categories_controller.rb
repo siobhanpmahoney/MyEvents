@@ -1,7 +1,9 @@
 class CategoriesController < ApplicationController
 
-  def all_music_events
+  def music_events
+    byebug
     @all_music = Event.all.select {|e| e.categories[0].classification_name == "Music"}
+
   end
 
   def all_sports_events
@@ -16,19 +18,57 @@ class CategoriesController < ApplicationController
     @all_misc = Event.all.select {|e| e.categories.classification_name == "Miscellaneous"}
   end
 
-  private
+   private
+   # def classification_list
+   #   @all_music.map {|c| c.categories[0].genre_name }.uniq
+   # end
+   #
+   # cat_hash = [classification => [{genre: [subgenres]}]
 
-  def mus_genres
-    @all_music.map do |a|
-      a.categories[0].genre_
-    end
-  end
 
-  def mus_subgenres
-    array = []
-    mus_genres.each do |g|
-      subg_array = @all_music.select {|s| s.categories[0].}
-      array << g =>
+
+
+
+#
+#     @events.map do |e|
+#
+#       if c == e.categories[0].classification_name && !ch.include(c)
+#         ch << {c => [e.categories[0].genre_name]}
+#       end
+#     end
+#   end
+#   ch
+# end
+#
+#
+#   ch
+# end
+#
+# def
+#
+#
+#   @all_music.each do |c|
+#     if !ch.include?(c)
+#       ch << c
+#     end
+#     ch
+#   end
+# end
+
+
+   #
+   # end
+
+
+  #     a.categories[0].genre_
+  #   end
+  # end
+  #
+  # def mus_subgenres
+  #   array = []
+  #   mus_genres.each do |g|
+  #     subg_array = @all_music.select {|s| s.categories[0].}
+  #     array << g =>
 
 
 end
