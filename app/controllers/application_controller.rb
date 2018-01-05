@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :loggedin?
   before_action :authorize
 
-
   def current_user
     if session[:userid]
       User.find(session[:userid])

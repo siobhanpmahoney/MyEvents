@@ -1,10 +1,16 @@
 Welcome Home Page <br>
 
 
-May want a search <br>
-May want to sign in and sign up <br>
-Welcome message maybe picture <br>
-List of events the user would be interested in <br>
+<h2> Welcome back, <%= @user.first_name.capitalize %> </h2>
 
-
-search - which goes api and pulls info and create an instance 
+<h3>Upcoming Events Near You: </h3>
+<ul>
+  <% @nearby_and_upcoming_events[0..4].each do |i| %>
+  <li><h4><%= link_to i.name, i %></h4> </li>
+  <ul>
+    <li>Date: <%=i.start_date %></li>
+    <li>Venue: <%=i.venue.name %></li>
+    <li>Location: <%=i.venue.city %>, <%= i.venue.state %></li>
+  </ul>
+  <% end %>
+</ul>
