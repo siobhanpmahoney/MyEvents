@@ -4,9 +4,12 @@ require 'json'
 
 class WelcomeController < ApplicationController
 
-  # skip_before_action :authorize
+   skip_before_action :authorize
 
   def home
+    @events = Event.all
+    @user = current_user
+    @nearby_and_upcoming_events = Event.all.select {|e| e.venue.city == user.venue.city}.sort_by {|ev| ev.start_date }
   end
 
 
