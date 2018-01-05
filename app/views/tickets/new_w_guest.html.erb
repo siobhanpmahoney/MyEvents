@@ -1,0 +1,39 @@
+
+Fill in payment information!
+
+
+page that has form for user with tickets to purchase and ends
+
+
+<%= form_tag "/tickets/guest" do %>
+How many tickets?<br>
+<%= select_tag "ticket[count]", options_for_select((1..20).to_a), class: "form-controller" %> <br>
+<br><br>
+What is your budget per ticket? <br>
+<%= radio_button_tag "ticket[price]", "#{@event.price_min}" %>
+$<%= @event.price_min %> <!-- @event.price_max when available --> <br>
+<%= radio_button_tag "ticket[price]", "#{@event.price_min}" %>
+$<%= rand(50..150) %> <!-- or maybe a random selection of three between prices --> <br>
+<%= radio_button_tag "ticket[price]", "#{@event.price_min}" %>
+$<%= rand(150..300) %> <br><br>
+Billing Information <br> <br>
+<%= text_field_tag :first_name, nil, placeholder: "First Name" %> <br>
+<%= text_field_tag :last_name, nil, placeholder: "Last Name" %> <br>
+<%= text_field_tag :email, nil, placeholder: "Email" %> <br>
+<%= label_tag "Date of birth" %>
+<%= date_select :birth_date, nil, start_year: 1900 %> <br>
+<%= text_field_tag :address, nil, placeholder: "Address" %> <br>
+<%= text_field_tag :address2, nil, placeholder: "Address 2" %> <br>
+<%= text_field_tag :city, nil, placeholder: "City" %> <br>
+<%= text_field_tag :state, nil, placeholder: "State" %> <br>
+<%= number_field_tag :postal_code, nil, placeholder: "Postal Code" %> <br>
+<%= number_field_tag :cc_name, nil, placeholder: "Name on Credit Card" %> <br>
+<%= number_field_tag :cc_number, nil, placeholder: "Credit Card Number" %> <br>
+<%= date_select :cc_expiration, nil, start_year: 2018 %> <br>
+<%= number_field_tag :cc_security_code, nil, placeholder: "Security Code" %> <br>
+<%= hidden_field_tag 'id', @event.id %>
+
+
+<br><br>
+<%= button_tag "Buy tickets", class: "btn img-rounded bg-primary text-light mx-5 px-5" %>
+<% end %>

@@ -9,3 +9,17 @@
 <%= @user.city %> <br>
 <%= @user.state %> <br>
 <%= @user.postal_code %> <br>
+<% @user.friends.each do |f| %> <br>
+<%= f.first_name %> <br>
+<% end %> <br>
+
+
+Your Upcoming Events:
+<br><br>
+<% @user.events.uniq.each do |e| %>
+  <%= e.name %> <br>
+  <%= e.start_date %> <br>
+  <%= e.venue.name %> <br>
+  <%= e.venue.city %> <br>
+  <%= e.venue.state %> <br>
+  <% end %>

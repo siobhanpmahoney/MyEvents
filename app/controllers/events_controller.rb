@@ -1,7 +1,6 @@
 class EventsController < ApplicationController
-
   skip_before_action :authorize
-  
+
   def index
 
     if params[:search]

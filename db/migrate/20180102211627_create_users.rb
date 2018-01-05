@@ -12,6 +12,10 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :city
       t.string :state
       t.integer :postal_code
+      t.bigint :cc_number
+      t.datetime :cc_expiration
+      t.string :cc_name
+      t.integer :cc_security_code
 
       t.timestamps
     end

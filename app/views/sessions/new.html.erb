@@ -1,3 +1,7 @@
+<% if flash[:msg] %>
+  <%= flash[:msg] %>
+<% end %>
+
 
 
 <%= form_tag login_path do %>
@@ -5,3 +9,18 @@
 <%= password_field_tag :password, nil, placeholder: "Enter your Password" %>
 <%= submit_tag "Login" %>
 <% end %>
+
+<br><br><br>
+
+<div class="container">
+  <div class="row">
+
+
+    <div class="col-12">
+      New to MyEvents? <br>
+      <%= link_to "Sign Up", new_user_path %>
+    </div>
+
+
+  </div>
+</div>

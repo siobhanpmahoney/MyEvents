@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  skip_before_action :authorize
+  skip_before_action :authorize, only: [:new, :create]
 
 
   def index
@@ -15,10 +15,26 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params) ? User.new(user_params) : User.new_guest
 
     if @user.valid?
       @user.save
+      session[:userid] = @user.id
+      redirect_to user_path(@user)
+    else
+      flash[:error] = @user.errors.full_messages
+      redirect_to new_user_path
+    end
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+
+    if @user.update(user_params)
       redirect_to user_path(@user)
     else
       flash[:error] = @user.errors.full_messages

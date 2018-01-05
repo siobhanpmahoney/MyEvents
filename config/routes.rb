@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   resources :events
   resources :attractions
 
+  get 'tickets/guest', to: 'tickets#new_w_guest'
+  post 'tickets/guest', to: 'tickets#create_w_guest'
+
+  resources :tickets, only: [:new, :create, :show]
+
   root to: "welcome#home"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get 'search', to: 'search#results'

@@ -1,0 +1,31 @@
+This is the page you should land on to show your purchased tickets
+
+
+<h3>Thank you for your purchase</h3>
+
+
+<%= @tickets.count %> ticket(s) to
+
+<%= @ticket.event.name %> <br>
+<%= @ticket.event.start_date %> <br>
+<%= @ticket.event.venue.name %>,
+<%= @ticket.event.venue.city %>
+<%= @ticket.event.venue.state %>
+
+<br><br><br>
+
+<%= @user.first_name %> <br>
+<%= @user.last_name %> <br>
+<%= @user.email %> <br>
+<%= @user.address %> <br>
+<%= @user.address2 %> <br>
+<%= @user.city %> <br>
+<%= @user.state %> <br>
+<%= @user.postal_code %> <br>
+
+<br><br>
+Would you like to sign up?
+
+<%= form_tag login_path(@user) do %>
+<%= button_tag "Finish Sign Up", class: "btn img-rounded bg-primary text-light mx-5 px-5" %>
+<% end %>

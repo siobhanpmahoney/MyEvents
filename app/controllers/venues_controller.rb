@@ -1,5 +1,7 @@
 class VenuesController < ApplicationController
 
+  skip_before_action :authorize
+
   def index
     if params[:search]
       @venues = Venue.search(params[:search]).order("created_at DESC")

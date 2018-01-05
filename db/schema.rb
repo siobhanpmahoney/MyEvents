@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180104225704) do
+ActiveRecord::Schema.define(version: 20180105041908) do
 
   create_table "attraction_events", force: :cascade do |t|
     t.integer "event_id"
@@ -84,6 +84,16 @@ ActiveRecord::Schema.define(version: 20180104225704) do
     t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
+  create_table "tickets", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "event_id"
+    t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_tickets_on_event_id"
+    t.index ["user_id"], name: "index_tickets_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -96,6 +106,10 @@ ActiveRecord::Schema.define(version: 20180104225704) do
     t.string "city"
     t.string "state"
     t.integer "postal_code"
+    t.bigint "cc_number"
+    t.datetime "cc_expiration"
+    t.string "cc_name"
+    t.integer "cc_security_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

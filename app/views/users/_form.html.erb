@@ -1,0 +1,16 @@
+<br>
+<%= form_for @user do |f| %>
+<%= f.text_field :username, placeholder: "Username", value: "" %> <br><br>
+<%= f.password_field :password, placeholder: "Password" %> <br><br>
+<%= f.password_field :password_confirmation, placeholder: "Password Confirmation" %> <br><br>
+<%= f.text_field :first_name, placeholder: "Enter your First Name" %> <br><br>
+<%= f.text_field :last_name, placeholder: "Enter your Last Name" %> <br><br>
+<%= f.text_field :email, placeholder: "Enter your Email" %> <br><br>
+<%= f.date_select :birth_date, start_year: 1900 %> <br><br>
+<%= f.text_field :address, placeholder: "Address" %> <br><br>
+<%= f.text_field :address2, placeholder: "Address 2" %> <br><br>
+<%= f.text_field :city, placeholder: "City" %> <br><br>
+<%= f.text_field :state, placeholder: "State" %> <br><br>
+<%= f.number_field :postal_code, placeholder: "Postal Code" %> <br><br>
+<%= f.submit %>
+<% end %>

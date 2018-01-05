@@ -8,9 +8,12 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+
   <div class="nav navbar  bg-dark text-light">
     <div class="container">
       <div class="row">
+
+
         <div class="col-sm">
           <%= link_to "Home", root_url %>
         </div>
@@ -18,16 +21,15 @@
 
 
         <div class="col-sm">
-
           <form action="/search">
             <input name="format" placeholder="Music, Sports, Arts & Theatre">
             <input type="submit" value="search" >
           </form>
-
         </div>
 
-        <div class="col-sm">
 
+
+        <div class="col-sm">
           <div class="dropdown">
             <button class="btn bg-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               My Account
@@ -36,21 +38,22 @@
 
               <% if loggedin? %>
               <%= button_to "Log out", logout_path, class: "btn img-rounded bg-primary text-light mx-5 px-5", method: :delete %>
+              <%= link_to "Edit Profile", edit_user_path(current_user), class: "dropdown-item" %>
               <% else %>
               <%= button_to "Sign In", login_path, class: "btn img-rounded bg-primary text-light mx-5 px-5", method: :get %>
+              <%= link_to "Edit Profile", login_path, class: "dropdown-item" %>
               <% end %>
-              <a class="dropdown-item" href="#">Action</a>
+
+              <a class="dropdown-item" href="#">VIEW TICKETS</a>
               <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </div>
-
         </div>
 
+
       </div>
-
     </div>
-
   </div>
 
 
@@ -64,7 +67,6 @@
     <% if loggedin? %>
     Hello <%= current_user.first_name %>!
     <% end %>
-
 
     Music
     Sports

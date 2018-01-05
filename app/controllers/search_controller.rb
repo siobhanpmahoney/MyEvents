@@ -41,7 +41,7 @@ class SearchController < ApplicationController
   def creates_event_instances(json_results)
     if json_results != []
       json_results['_embedded']['events'].map do |e|
-        ev = Event.create(name: e['name'], sale_date: e['sales']['public']['startDateTime'], start_date: e['dates']['start']['dateTime'])
+        ev = Event.create(name: e['name'], sale_start_date: e['sales']['public']['startDateTime'], start_date: e['dates']['start']['dateTime'])
         ven = Venue.find_or_create_by(name: e['_embedded']['venues'][0]['name'])
         ven.update(city: e['_embedded']['venues'][0]['city']['name'])
         ev.update(venue: ven)

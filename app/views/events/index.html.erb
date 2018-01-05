@@ -1,8 +1,19 @@
+on the side show popular events(with count of ticket to show how many rsvps)
+
+shop by category (a few events sorted by subgenre)
+
+friends attending certain shows
+
+
 <% @events.each do |event| %>
   Name: <%= link_to event.name, event %> <br>
   Sale Date: <%= event.sale_start_date %> <br>
   Start Date: <%= event.start_date %> <br>
   Venue: <%= link_to event.venue.name, event.venue %> <br>
+  <%= form_tag "/tickets/new", method: :get do %>
+  <%= hidden_field_tag 'id', event.id %>
+  <%= button_tag "See tickets", class: "btn img-rounded bg-primary text-light mx-5 px-5" %>
+  <% end %>
 
   <br>
   <br>

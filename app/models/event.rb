@@ -3,8 +3,10 @@ class Event < ApplicationRecord
   has_many :attractions, through: :attraction_events
   has_many :category_events
   has_many :categories, through: :category_events
-
+  has_many :tickets
+  has_many :users, through: :tickets
   belongs_to :venue
+  
   accepts_nested_attributes_for :attractions
   accepts_nested_attributes_for :categories
 

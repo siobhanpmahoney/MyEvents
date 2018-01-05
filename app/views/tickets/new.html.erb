@@ -1,0 +1,46 @@
+<% if flash[:msg] %>
+  <%= flash[:msg] %>
+  <% end %>
+
+<br><br>
+
+<%= @event.name %> <br>
+<%= @event.start_date %> <br>
+<%= @event.venue.name %>, <%= @event.venue.city %>, <%= @event.venue.state %> <br>
+
+<br><br>
+
+
+
+<% if loggedin? %>
+
+what are you looking for today? <br>
+<br><br>
+<%= form_tag tickets_path do %>
+<%= hidden_field_tag 'id', @event.id %>
+How many tickets?<br>
+<%= select_tag "ticket[count]", options_for_select((1..20).to_a), class: "form-controller" %> <br>
+<br><br>
+What is your budget per ticket? <br>
+<%= radio_button_tag "ticket[price]", "#{@event.price_min}" %>
+$<%= @event.price_min %> <!-- @event.price_max when available --> <br>
+<%= radio_button_tag "ticket[price]", "#{@event.price_min}" %>
+$<%= rand(50..150) %> <!-- or maybe a random selection of three between prices --> <br>
+<%= radio_button_tag "ticket[price]", "#{@event.price_min}" %>
+$<%= rand(150..300) %>
+<br><br>
+<%= button_tag "Buy tickets", class: "btn img-rounded bg-primary text-light mx-5 px-5" %>
+<% end %>
+
+<% else %>
+
+<%= form_tag tickets_guest_path, method: :get do %>
+<%= hidden_field_tag 'id', @event.id %>
+<br><br>
+<%= button_tag "Purchase as Guest", class: "btn img-rounded bg-primary text-light mx-5 px-5" %>
+<% end %> <br>
+<%= form_tag login_path do %>
+<%= button_tag "Sign In", class: "btn img-rounded bg-primary text-light mx-5 px-5" %>
+<% end %> <br>
+
+<% end %>

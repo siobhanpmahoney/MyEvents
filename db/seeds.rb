@@ -36,7 +36,7 @@ def seed_events(events)
       name: event["name"],
       sale_start_date: event["sales"]["public"]["startDateTime"],
       sale_end_date: event["sales"]["public"]["endDateTime"],
-      # price_min: event["priceRanges"][0]["min"],
+      price_min: rand(10..100),
       # price_max: event["priceRanges"][0]["max"],
       # img_1: event["sales"]["public"]["endDateTime"],
       start_date: event["dates"]["start"]["dateTime"],
@@ -75,10 +75,41 @@ seed_events(ev)
 
 
 
+50.times do
+  fn = Faker::Name.first_name
+  ln = Faker::Name.last_name
+
+  User.create(
+     username: Faker::Superhero.name,
+     password: "hello",
+     first_name: fn,
+     last_name: ln,
+     birth_date: Faker::Date.birthday(18, 65),
+     email: Faker::Internet.email,
+     address: Faker::Address.street_address,
+     address2: Faker::Address.secondary_address,
+     city: Faker::Address.city,
+     state: Faker::Address.state,
+     postal_code: Faker::Address.zip_code,
+     cc_number: Faker::Number.number(16),
+     cc_expiration: Faker::Date.forward(60),
+     cc_name: fn + ln,
+     cc_security_code: Faker::Number.number(3)
+  )
+end
 
 
 
- 
+User.all[0..4].each do |user|
+  user.add_friend(User.last)
+  user.add_friend(User.all[-2])
+  user.add_friend(User.all[-3])
+  user.add_friend(User.all[-4])
+  user.add_friend(User.all[-5])
+end
+
+
+
 
 
 # if event["_embedded"]["attractions"]
