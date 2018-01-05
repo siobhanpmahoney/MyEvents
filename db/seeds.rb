@@ -125,8 +125,6 @@ def seed_events(events)
       #
       attractions = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq&size=100"))
 
-       #this link has a link to events (upcomingEvents)
-       #classification
 
       def seed_attractions
         attractions["_embedded"]["attractions"].each do |attr|
@@ -136,7 +134,7 @@ def seed_events(events)
             instagram: attr["externalLinks"]["instagram"][0]["url"],
             youtube: attr["externalLinks"]["youtube"][0]["url"],
             tm_attraction_id: attr["id"])
-      #
+
             at_ev = JSON.parse(RestClient.get( "https://app.ticketmaster.com/discovery/v2/events.json?attractionId=#{attr[:tm_attraction_id]}&apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq"))["_embedded"]["attractions"]
             if at_ev != []
               at_ev.each do |event|
@@ -164,65 +162,65 @@ def seed_events(events)
               end
             end
           end
-      #
-      #
-      #
-      #     venues = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/venues.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq"))
-      #
-      #     def seed_venues
-      #       new_venues = venues["_embedded"]["venues"].each do |v|
-      #         ven = Venue.find_or_create_by(tm_venue_id: v["id"])
-      #         ven.update(address: v["address"]["line1"], city: v["city"]["name"],
-      #           general_info: v["generalInfo"]["generalRule"],
-      #           name: v["name"],
-      #           parking_details: v["parkingDetail"],
-      #           postal_code: v["postalCode"],
-      #           state: v["state"]["stateCode"])
-      #
-      #           venue_events = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?attractionId=#{v[:tm_venue_id]}&apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq"))["_embedded"]["events"]
-      #
-      #           if venue_events != nil
-      #
-      #             venue_events.each do |ve_ev|
-      #               ev500 = Event.find_or_create_by(tm_event_id: ve_ev["id"])
-      #               ev500.update(
-      #                 name: ve_ev["name"],
-      #                 sale_start_date: ve_ev["sales"]["public"]["startDateTime"],
-      #                 sale_end_date: ve_ev["sales"]["public"]["endDateTime"],
-      #                 price_min: ve_ev["priceRanges"][0]["min"],
-      #                 price_max: ve_ev["priceRanges"][0]["max"],
-      #                 # img_1: ve_ev["sales"]["public"]["endDateTime"],
-      #                 start_date: ve_ev["dates"]["start"]["dateTime"], venue: Venue.find(v[:id]))
-      #
-      #
-      #                 if ve_ev["_embedded"]["attractions"]
-      #                   ve_ev["_embedded"]["attractions"].each do |attr|
-      #                     a = Attraction.find_or_create_by(tm_attraction_id: attr["id"])
-      #                     a.update(name: attr["name"], twitter: attr["externalLinks"]["twitter"][0]["url"], facebook: attr["externalLinks"]["facebook"][0]["url"], instagram: attr["externalLinks"]["instagram"][0]["url"])
-      #                     # , youtube: attr["externalLinks"]["youtube"][0]["url"])
-      #
-      #                     ev500.attractions << a
-      #
-      #
-      #                   end
-      #                 end
-      #               end
-      #             end
-      #           end
-      #         end
-      #
-      #
-      #
-      #
-      #
-      #
-      #
-      #
-      #
-      #
-      #
-      #
-      #
+
+
+
+venues = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/venues.json?apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq"))
+
+def seed_venues(venues)
+  new_venues = venues["_embedded"]["venues"].each do |v|
+    ven = Venue.find_or_create_by(tm_venue_id: v["id"])
+    ven.update(
+      address: v["address"]["line1"],
+      city: v["city"]["name"],
+      general_info: v["generalInfo"]["generalRule"],
+      name: v["name"],
+      parking_details: v["parkingDetail"],
+      postal_code: v["postalCode"],
+      state: v["state"]["name"])
+
+     # venue_events = JSON.parse(RestClient.get("https://app.ticketmaster.com/discovery/v2/events.json?venueId=#{v[:tm_venue_id]}&apikey=wCElOJlP8V5gpb6GGKmL3c9hKAva1dRq"))["_embedded"]["events"]
+     #
+     # if venue_events != nil
+     #
+     #   venue_events.each do |ve_ev|
+     #     ev500 = Event.find_or_create_by(tm_event_id: ve_ev["id"])
+     #     ev500.update(
+     #       name: ve_ev["name"],
+     #       sale_start_date: ve_ev["sales"]["public"]["startDateTime"],
+     #       sale_end_date: ve_ev["sales"]["public"]["endDateTime"],
+     #       start_date: ve_ev["dates"]["start"]["dateTime"], venue: Venue.find(v[:id]))
+
+           if ev500["priceRanges"] != nil
+             if ve_ev["priceRanges"][0].keys.include?("min")
+               ev500.update(price_min: ve_ev["priceRanges"][0]["min"])
+             end
+             if ve_ev["priceRanges"][0].keys.include?("max")
+               ev500.update(price_max: ve_ev["priceRanges"][0]["max"])
+             end
+           end
+
+    #
+    #       if ve_ev["_embedded"]["attractions"]
+    #         ve_ev["_embedded"]["attractions"].each do |attr|
+    #           a = Attraction.find_or_create_by(tm_attraction_id: attr["id"])
+    #           a.update(name: attr["name"], twitter: attr["externalLinks"]["twitter"][0]["url"], facebook: attr["externalLinks"]["facebook"][0]["url"], instagram: attr["externalLinks"]["instagram"][0]["url"])
+    #           # , youtube: attr["externalLinks"]["youtube"][0]["url"])
+    #
+    #           ev500.attractions << a
+    #
+    #
+    #         end
+    #       end
+    #     end
+    #   end
+    # end
+  end
+end
+  end
+end
+
+
       #         #
       #         # def search_bar
       #         #
